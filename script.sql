@@ -42,13 +42,13 @@ set @wcase_id	= case when @rnd3 ='1' then 'им'
 set @wcase_id2	= case when @rnd3 ='1' then 'им' 	else 'вин' end
 -- выбираем во временные таблицы подходяшие друг к другу слова
 SELECT [word]	into #1tmp
-	FROM [test].[dbo].[words-russian-nouns-morf]
+	FROM [dbo].[words-russian-nouns-morf]
 	where [word] not like '%-%' and [word] like '____%' and right([word], 1) like @R and [plural] = @pur_id1 and [wcase] = @wcase_id and [gender] like @gender and soul =1  
 SELECT  [word]	into #2tmp
-	FROM [test].[dbo].[words-russian-verbs-morf]
+	FROM [dbo].[words-russian-verbs-morf]
 	where [word] not like '%-%' and [word] like '____%' and [plural] = @pur_id2 and face = '3-е' and [time]='наст' and  transit !='непер'
 SELECT  [word]	into #3tmp
-	FROM [test].[dbo].[words-russian-nouns-morf]
+	FROM [dbo].[words-russian-nouns-morf]
 	where [word] not like '%-%' and [word] like '____%' and [plural] =0	and [wcase] ='вин' and soul =1
 -- выбираем по одному случайному слову из выборки
 -- переводим первый символ в верхний регистр
@@ -60,7 +60,7 @@ set @2 =STUFF(@2, 1,1, UPPER(left(@2, 1)))
 set @3 = (select top 1 * from (select top 1 percent * from #3tmp order by newid()) s )
 set @3 =STUFF(@3, 1,1, UPPER(left(@3, 1)))
 -- определяем пол для слова1 в зависимости от числа пароля и пола слова2
-set @gender2	= case	when @rnd3 = '1' then (select ''+gender+'' from [test].[dbo].[words-russian-nouns-morf] where word = @1 and gender like @gender and  [plural] = @pur_id1 and [wcase] = @wcase_id and soul =1  and right([word], 1) like @R)
+set @gender2	= case	when @rnd3 = '1' then (select ''+gender+'' from [dbo].[words-russian-nouns-morf] where word = @1 and gender like @gender and  [plural] = @pur_id1 and [wcase] = @wcase_id and soul =1  and right([word], 1) like @R)
 						else '' end
 -- определяем окончание слова1 в зависимости от числа пароля
 set @R2			= case	when @rnd3 !='1' then 'х'  
@@ -71,7 +71,7 @@ set @pur_id3	= case	when @gender2 = '' THEN '1'
 -- выбираем во временную таблицу подходяшие слова1
 select [word]
 	into #4tmp
-	from [test].[dbo].[words-russian-adjectives-morf]
+	from [dbo].[words-russian-adjectives-morf]
 	where  [gender] like @gender2 and [word] like '____%'  and [plural] = @pur_id3 and [wcase] = @wcase_id2  and comp is null and right([word], 1) like @R2
 -- выбираем по одному случайному слову из выборки
 -- переводим первый символ в верхний регистр
