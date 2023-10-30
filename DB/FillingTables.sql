@@ -1,7 +1,7 @@
--- Заполнение таблиц слов
---Если вам не нужно такое кол-во, то ограничте SELECT командой TOP()
+-- Р—Р°РїРѕР»РЅРµРЅРёРµ С‚Р°Р±Р»РёС† СЃР»РѕРІ
+--Р•СЃР»Рё РІР°Рј РЅРµ РЅСѓР¶РЅРѕ С‚Р°РєРѕРµ РєРѕР»-РІРѕ, С‚Рѕ РѕРіСЂР°РЅРёС‡С‚Рµ SELECT РєРѕРјР°РЅРґРѕР№ TOP()
 
---тут задать путь до файлов
+--С‚СѓС‚ Р·Р°РґР°С‚СЊ РїСѓС‚СЊ РґРѕ С„Р°Р№Р»РѕРІ
 DECLARE 
 @path_verbs_morf nvarchar(255) = '',
 @path_nouns_morf nvarchar(255) = '',
@@ -26,7 +26,7 @@ INSERT INTO [dbo].[words-russian-verbs-morf] (
       ,[nakl])
 SELECT 
 --TOP(1000)
-* FROM OPENROWSET(''Microsoft.ACE.OLEDB.12.0'', ''Excel 12.0;Database='+@path_verbs_morf+';HDR=YES'', ''SELECT * FROM [Лист1$A1:N]'') 
+* FROM OPENROWSET(''Microsoft.ACE.OLEDB.12.0'', ''Excel 12.0;Database='+@path_verbs_morf+';HDR=YES'', ''SELECT * FROM [Р›РёСЃС‚1$A1:N]'') 
 '
 
 EXECUTE sp_executesql @TSQL,N''
@@ -46,7 +46,7 @@ INSERT INTO [dbo].[words-russian-nouns-morf] (
 	 )
 SELECT 
 --TOP(1000)
-* FROM OPENROWSET(''Microsoft.ACE.OLEDB.12.0'', ''Excel 12.0;Database='+@path_nouns_morf+';HDR=YES'', ''SELECT * FROM [Лист1$A1:I]'') 
+* FROM OPENROWSET(''Microsoft.ACE.OLEDB.12.0'', ''Excel 12.0;Database='+@path_nouns_morf+';HDR=YES'', ''SELECT * FROM [Р›РёСЃС‚1$A1:I]'') 
 '
 
 EXECUTE sp_executesql @TSQL,N''
@@ -66,6 +66,6 @@ INSERT INTO [dbo].[words-russian-adjectives-morf] (
 	 )
 SELECT 
 --TOP(1000)
-* FROM OPENROWSET(''Microsoft.ACE.OLEDB.12.0'', ''Excel 12.0;Database='+@path_adjectives_morf+';HDR=YES'', ''SELECT * FROM [Лист1$A1:J]'')
+* FROM OPENROWSET(''Microsoft.ACE.OLEDB.12.0'', ''Excel 12.0;Database='+@path_adjectives_morf+';HDR=YES'', ''SELECT * FROM [Р›РёСЃС‚1$A1:J]'')
 '
 EXECUTE sp_executesql @TSQL,N''
